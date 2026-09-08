@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { FaRocket, FaHandshake, FaMagic, FaUserFriends, FaGlobe, FaDice, FaArrowRight, FaRedo } from 'react-icons/fa';
+import { FaRocket, FaHandshake, FaMagic, FaUserFriends, FaGlobe, FaDice, FaArrowRight, FaRedo, FaArrowLeft } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 
@@ -63,24 +63,24 @@ const Landing = () => {
 
   const quizQuestions = [
     {
-      question: "What's your ideal weekend vibe?",
-      options: ['🛋️ Cozy & Chill', '🌿 Outdoorsy', '🎨 Creative Mess', '🏃 Active & Sweaty']
+      question: "What lights you up inside?",
+      options: ['🎨 Creating something beautiful', '🌳 Exploring the unknown', '🧠 Solving complex puzzles', '🫂 Connecting with others']
     },
     {
-      question: "What's your creative energy like?",
-      options: ['☀️ Morning person', '🌙 Night owl', '🔄 Balanced', '💥 All over the place']
+      question: "When do you feel most alive?",
+      options: ['🌙 In the quiet hours of the night', '☀️ With the fresh morning energy', '💥 When the pressure is on', '🌊 When things are fluid and chill']
     },
     {
-      question: "Pick your mood:",
-      options: ['✨ Chill & Relaxed', '🔥 Intense & Focused', '🧘 Mindful & Zen', '🎉 Playful & Silly']
+      question: "Choose your aesthetic:",
+      options: ['🌿 Earthy & grounded', '🔮 Mystical & dreamy', '🏙️ Urban & edgy', '🌸 Cozy & pastel']
     },
     {
-      question: "What do you want to create?",
-      options: ['🖌️ Visual Art', '🍳 Delicious Food', '🎵 Music & Sounds', '📝 Words & Stories']
+      question: "What do you seek in a hobby?",
+      options: ['🧘 Inner peace and mindfulness', '🏆 Mastery and respect', '🎉 Fun and entertainment', '💖 Meaning and purpose']
     },
     {
-      question: "Your perfect hobby partner is...",
-      options: ['🤝 Collaborative', '🧠 Challenging', '😂 Funny & Light', '🫂 Supportive']
+      question: "Your ideal community is...",
+      options: ['🤝 Close-knit and supportive', '🌍 Diverse and inspiring', '🧠 Smart and challenging', '😂 Hilarious and unserious']
     }
   ];
 
@@ -102,9 +102,17 @@ const Landing = () => {
     if (quizStep < quizQuestions.length - 1) {
       setQuizStep(quizStep + 1);
     } else {
-      // Calculate result based on answers
       const resultIndex = newAnswers.reduce((sum, val) => sum + val, 0) % quizResults.length;
       setQuizResult(quizResults[resultIndex].title);
+    }
+  };
+
+  const goBack = () => {
+    if (quizStep > 0) {
+      setQuizStep(quizStep - 1);
+      const newAnswers = [...quizAnswers];
+      newAnswers.pop();
+      setQuizAnswers(newAnswers);
     }
   };
 
@@ -118,8 +126,39 @@ const Landing = () => {
     return quizResults.find(r => r.title === quizResult) || quizResults[0];
   };
 
-  // ----- FEATURES DATA (Index Cards) -----
-  // (Already defined above)
+  // ----- CURIOSITY GENERATOR -----
+  const curiosityFacts = [
+    'Knitting was originally a male-only profession in medieval Europe.',
+    "The world's largest puzzle has 60,000 pieces and weighs 30kg.",
+    'Shakespeare invented over 1,700 words we still use today.',
+    'Playing an instrument makes your brain 25% better at processing sound.',
+    'The oldest known recipe is for beer – from 5,000 years ago.',
+    'Your brain can generate new neurons through learning hobbies.',
+    'The most expensive guitar ever sold was a 1959 Gibson Les Paul for $2.5M.',
+    'Origami was originally only practiced by the wealthy elite in Japan.',
+    'The longest painting in the world is 2.7 miles long.',
+    'Chess was invented in India around the 6th century AD.',
+    'The first photograph ever taken is from 1826.',
+    'Gardening can reduce stress better than reading a book.',
+    'The fastest typewriter typist hit 216 words per minute.',
+    'Painting can lower your blood pressure and improve memory.',
+    'The first known musical instrument is a 40,000-year-old flute.',
+    'Yoga was originally practiced by monks for 8+ hours a day.',
+    "The most expensive book ever sold was Leonardo da Vinci's Codex.",
+    'Sourdough starter has been kept alive for over 4,500 years.',
+  ];
+
+  const [currentFactIndex, setCurrentFactIndex] = useState(
+    Math.floor(Math.random() * curiosityFacts.length)
+  );
+
+  const generateFact = () => {
+    let newIndex;
+    do {
+      newIndex = Math.floor(Math.random() * curiosityFacts.length);
+    } while (newIndex === currentFactIndex);
+    setCurrentFactIndex(newIndex);
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-cream-50 font-sans">
@@ -127,7 +166,7 @@ const Landing = () => {
 
       {/* ---------- HERO: NOTEBOOK VIBE ---------- */}
       <section className="relative bg-cream-50 py-16 md:py-24 overflow-hidden">
-        {/* Dot Grid Background (Notebook texture) */}
+        {/* Dot Grid Background */}
         <div className="absolute inset-0 bg-[radial-gradient(#e5e0d8_1px,transparent_1px)] [background-size:24px_24px] opacity-40 pointer-events-none"></div>
 
         {/* Soft Radial Glow */}
@@ -208,7 +247,7 @@ const Landing = () => {
           </div>
         </div>
 
-        {/* SCATTERED POLAROID IMAGES (Scrapbook feel) */}
+        {/* SCATTERED POLAROID IMAGES */}
         <div className="absolute inset-0 pointer-events-none hidden lg:block">
           <img
             src="https://images.unsplash.com/photo-1536924940840-4eb24c0a1c9d?w=200&h=200&fit=crop"
@@ -233,7 +272,7 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* ---------- FEATURES: "THE VIBE CHECK" (Index Cards) ---------- */}
+      {/* ---------- FEATURES: "THE VIBE CHECK" ---------- */}
       <section className="py-20 bg-white border-y-2 border-cream-200">
         <div className="max-w-6xl mx-auto px-4">
           <motion.div
@@ -268,7 +307,7 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* ---------- HOBBY ORACLE QUIZ (Replaces "The Ritual" & "The Grapevine") ---------- */}
+      {/* ---------- HOBBY ORACLE QUIZ ---------- */}
       <section className="py-20 bg-gradient-to-br from-primary-50 via-cream-50 to-gold-50/30 border-y-2 border-cream-200">
         <div className="max-w-4xl mx-auto px-4">
           <motion.div
@@ -291,19 +330,34 @@ const Landing = () => {
             {quizResult === null ? (
               // --- QUIZ MODE ---
               <div>
-                {/* Progress Bar */}
-                <div className="mb-8">
-                  <div className="flex justify-between text-sm text-gray-500 mb-2">
-                    <span>Question {quizStep + 1} of {quizQuestions.length}</span>
-                    <span>{Math.round(((quizStep + 1) / quizQuestions.length) * 100)}%</span>
-                  </div>
-                  <div className="w-full h-2 bg-cream-200 rounded-full overflow-hidden">
-                    <motion.div
-                      className="h-full bg-gradient-to-r from-primary-500 via-terracotta-400 to-gold-400 rounded-full"
-                      initial={{ width: 0 }}
-                      animate={{ width: `${((quizStep + 1) / quizQuestions.length) * 100}%` }}
-                      transition={{ duration: 0.5 }}
-                    />
+                {/* Progress Bar & Back Button */}
+                <div className="flex items-center gap-4 mb-8">
+                  <button
+                    onClick={goBack}
+                    disabled={quizStep === 0}
+                    className={`p-2 rounded-full transition-all ${
+                      quizStep === 0 
+                        ? 'text-gray-300 cursor-not-allowed' 
+                        : 'text-terracotta-500 hover:bg-terracotta-50 hover:scale-110'
+                    }`}
+                    aria-label="Go back"
+                  >
+                    <FaArrowLeft className="text-xl" />
+                  </button>
+                  
+                  <div className="flex-1">
+                    <div className="flex justify-between text-sm text-gray-500 mb-2">
+                      <span>Question {quizStep + 1} of {quizQuestions.length}</span>
+                      <span>{Math.round(((quizStep + 1) / quizQuestions.length) * 100)}%</span>
+                    </div>
+                    <div className="w-full h-2 bg-cream-200 rounded-full overflow-hidden">
+                      <motion.div
+                        className="h-full bg-gradient-to-r from-primary-500 via-terracotta-400 to-gold-400 rounded-full"
+                        initial={{ width: 0 }}
+                        animate={{ width: `${((quizStep + 1) / quizQuestions.length) * 100}%` }}
+                        transition={{ duration: 0.5 }}
+                      />
+                    </div>
                   </div>
                 </div>
 
@@ -311,12 +365,12 @@ const Landing = () => {
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={quizStep}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <h3 className="text-2xl md:text-3xl font-bold text-primary-900 mb-6 text-center">
+                    <h3 className="text-2xl md:text-3xl font-bold text-primary-900 mb-8 text-center">
                       {quizQuestions[quizStep].question}
                     </h3>
 
@@ -390,10 +444,21 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* ---------- CTA: DEEP PLUM (The Final Push) ---------- */}
-      <section className="relative py-20 bg-primary-900 text-white text-center overflow-hidden">
+      {/* ---------- CURIOSITY GENERATOR (Replaces old CTA) ---------- */}
+      <section className="relative py-20 bg-gradient-to-br from-primary-900 via-primary-800 to-primary-900 text-white text-center overflow-hidden border-t-4 border-gold-400/30">
         {/* Subtle pattern overlay */}
-        <div className="absolute inset-0 bg-[radial-gradient(#ffffff08_1px,transparent_1px)] [background-size:32px_32px] pointer-events-none"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(#ffffff05_1px,transparent_1px)] [background-size:32px_32px] pointer-events-none"></div>
+
+        {/* Floating hobby icons in the background */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <span className="absolute text-7xl opacity-10 top-10 left-10 rotate-12 animate-float-1">🎨</span>
+          <span className="absolute text-6xl opacity-10 bottom-10 right-10 -rotate-6 animate-float-2">🎸</span>
+          <span className="absolute text-5xl opacity-10 top-1/2 left-20 -rotate-12 animate-float-3">✍️</span>
+          <span className="absolute text-6xl opacity-10 top-20 right-20 rotate-6 animate-float-1">🧘</span>
+          <span className="absolute text-7xl opacity-10 bottom-20 left-20 -rotate-12 animate-float-2">🍳</span>
+          <span className="absolute text-5xl opacity-10 top-1/3 right-1/4 rotate-12 animate-float-3">📸</span>
+          <span className="absolute text-6xl opacity-10 bottom-1/3 left-1/4 -rotate-6 animate-float-1">🌱</span>
+        </div>
 
         <div className="absolute -top-20 -right-20 w-64 h-64 bg-gold-400/10 rounded-full blur-3xl"></div>
         <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-terracotta-400/10 rounded-full blur-3xl"></div>
@@ -402,29 +467,72 @@ const Landing = () => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="max-w-3xl mx-auto px-4 relative z-10"
+          className="max-w-4xl mx-auto px-4 relative z-10"
         >
-          <h2 className="text-3xl md:text-5xl font-black mb-4">
-            Ready to get <span className="text-gold-400 underline decoration-terracotta-400 decoration-4">weirdly passionate</span>?
+          {/* Small badge */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2 }}
+            className="inline-block bg-gold-400/20 backdrop-blur-sm text-gold-300 text-sm font-bold px-4 py-1.5 rounded-full border border-gold-400/30 mb-6"
+          >
+            🧠 Did you know?
+          </motion.div>
+
+          <h2 className="text-3xl md:text-5xl font-black mb-6 leading-tight">
+            <span className="text-gold-400">Curiosity</span> doesn't have to end here.
           </h2>
-          <p className="text-lg text-primary-200 mb-8">
-            Join the chaos. Your next favorite thing is one click away.
+
+          {/* The Generator Box */}
+          <motion.div
+            initial={{ scale: 0.95 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 0.3 }}
+            className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-3xl p-8 md:p-10 max-w-2xl mx-auto"
+          >
+            <div className="flex items-center gap-2 justify-center mb-4">
+              <span className="text-2xl">💡</span>
+              <span className="text-sm font-medium text-gold-300 uppercase tracking-wider">Random Fact</span>
+            </div>
+
+            <p className="text-xl md:text-2xl font-light text-white/90 leading-relaxed min-h-[80px] flex items-center justify-center">
+              “{curiosityFacts[currentFactIndex]}”
+            </p>
+
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={generateFact}
+                className="bg-gold-400 hover:bg-gold-500 text-primary-900 font-bold py-2.5 px-6 rounded-full shadow-lg transition-all inline-flex items-center gap-2 text-sm"
+              >
+                <FaDice className="text-lg" />
+                <span>Another fact</span>
+              </motion.button>
+
+              {!user ? (
+                <Link
+                  to="/signup"
+                  className="bg-white/20 hover:bg-white/30 text-white font-semibold py-2.5 px-6 rounded-full border border-white/30 transition-all inline-flex items-center gap-2 text-sm backdrop-blur-sm"
+                >
+                  <FaRocket className="text-gold-300" />
+                  <span>Join the curiosity</span>
+                </Link>
+              ) : (
+                <Link
+                  to="/dashboard"
+                  className="bg-white/20 hover:bg-white/30 text-white font-semibold py-2.5 px-6 rounded-full border border-white/30 transition-all inline-flex items-center gap-2 text-sm backdrop-blur-sm"
+                >
+                  <span>→</span>
+                  <span>Go to Dashboard</span>
+                </Link>
+              )}
+            </div>
+          </motion.div>
+
+          <p className="text-xs text-primary-300 mt-4 opacity-70">
+            ✨ 100% weirdo approved • No credit card required • Just pure vibes
           </p>
-          {!user ? (
-            <Link
-              to="/signup"
-              className="inline-block bg-gold-400 hover:bg-gold-500 text-primary-900 font-bold text-lg px-10 py-4 rounded-full shadow-2xl hover:scale-105 transition-transform border-4 border-gold-300 shadow-gold-500/20"
-            >
-              🚀 Create My Free Account
-            </Link>
-          ) : (
-            <Link
-              to="/dashboard"
-              className="inline-block bg-gold-400 hover:bg-gold-500 text-primary-900 font-bold text-lg px-10 py-4 rounded-full shadow-2xl hover:scale-105 transition-transform"
-            >
-              Go to my Dashboard →
-            </Link>
-          )}
         </motion.div>
       </section>
 
