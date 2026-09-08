@@ -1,66 +1,71 @@
-@import "tailwindcss";
+/* 1. ALL @imports MUST COME FIRST (Consecutive) */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import "tailwindcss";
 
+/* 2. THEN the Tailwind config directive */
+@config "../tailwind.config.js";
+
+/* 3. THEN your custom layers */
 @layer base {
   body {
-    background-color: #f9fafb;
-    color: #111827;
-    font-family: 'Inter', system-ui, sans-serif;
+    @apply bg-cream-50 text-gray-900 antialiased;
   }
   h1, h2, h3, h4, h5, h6 {
-    font-weight: 700;
+    @apply font-bold;
   }
 }
 
 @layer components {
   .btn-primary {
-    background-color: #7c3aed;
-    color: white;
-    font-weight: 600;
-    padding: 0.625rem 1.5rem;
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
-    transition: all 0.2s;
-    &:hover {
-      background-color: #6d28d9;
-      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
-      transform: translateY(-2px);
-    }
+    @apply bg-terracotta-500 hover:bg-terracotta-600 text-white font-semibold py-2.5 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 transform hover:-translate-y-0.5;
   }
   .btn-secondary {
-    background-color: white;
-    color: #7c3aed;
-    border: 1px solid #c4b5fd;
-    font-weight: 600;
-    padding: 0.625rem 1.5rem;
-    border-radius: 0.5rem;
-    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);
-    transition: all 0.2s;
-    &:hover {
-      background-color: #f9fafb;
-      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
-    }
+    @apply bg-cream-100 hover:bg-cream-200 text-primary-900 border border-primary-200 font-semibold py-2.5 px-6 rounded-lg shadow-sm hover:shadow-md transition-all duration-200;
+  }
+  .btn-gold {
+    @apply bg-gold-400 hover:bg-gold-500 text-white font-semibold py-2.5 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 transform hover:-translate-y-0.5;
   }
   .card {
-    background-color: white;
-    border-radius: 0.75rem;
-    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
-    padding: 1.5rem;
-    transition: box-shadow 0.3s;
-    &:hover {
-      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
-    }
+    @apply bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 p-6;
   }
   .input-field {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    border: 1px solid #d1d5db;
-    border-radius: 0.5rem;
-    outline: none;
-    transition: all 0.2s;
-    &:focus {
-      border-color: #8b5cf6;
-      ring: 2px solid #8b5cf6;
-    }
+    @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all;
   }
+}
+
+/* 4. 3D FLIP UTILITIES (For the Hobby Roller) */
+@layer utilities {
+  .perspective-500 {
+    perspective: 500px;
+  }
+  .transform-3d {
+    transform-style: preserve-3d;
+  }
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+}
+
+/* 5. FLOATING POLAROID ANIMATIONS */
+@keyframes float1 {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(3deg); }
+}
+@keyframes float2 {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-15px) rotate(-4deg); }
+}
+@keyframes float3 {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-25px) rotate(5deg); }
+}
+
+.animate-float-1 {
+  animation: float1 7s ease-in-out infinite;
+}
+.animate-float-2 {
+  animation: float2 9s ease-in-out infinite reverse;
+}
+.animate-float-3 {
+  animation: float3 8s ease-in-out infinite 1.5s;
 }
