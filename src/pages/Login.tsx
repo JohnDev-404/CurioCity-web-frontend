@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { useAuth } from '../hooks/useAuth';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import { FaEnvelope, FaLock, FaArrowRight } from 'react-icons/fa';
+import { FaEnvelope, FaLock, FaArrowRight, FaArrowLeft } from 'react-icons/fa';
 
 const loginSchema = z.object({
   email: z.string().email('Invalid email'),
@@ -33,6 +33,15 @@ const Login = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-cream-50 via-white to-gold-50/30 py-12 px-4">
       <div className="max-w-md mx-auto">
+        {/* Back Button */}
+        <Link
+          to="/"
+          className="inline-flex items-center gap-2 text-gray-500 hover:text-primary-700 transition-colors mb-6 group"
+        >
+          <FaArrowLeft className="group-hover:-translate-x-1 transition-transform" />
+          <span className="text-sm">Back to CurioCity</span>
+        </Link>
+
         {/* Brand header */}
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2 text-3xl font-black text-primary-900 group">
