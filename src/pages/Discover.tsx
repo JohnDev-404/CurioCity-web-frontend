@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import api from '../api/axios';
-import { useAuth } from '../hooks/useAuth';
+// import { useAuth } from '../hooks/useAuth';
 
 const Discover = () => {
-  const { user } = useAuth();
+  // const { user } = useAuth();
   const [hobby, setHobby] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');

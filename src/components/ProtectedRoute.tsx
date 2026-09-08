@@ -1,11 +1,9 @@
+import React from 'react';
 import { Navigate } from 'react-router-dom';
-import { useContext } from 'react';
-import { AuthContext } from '../contexts/AuthContext';
+import { useAuth } from '../hooks/useAuth';
 
 export const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
-  const ctx = useContext(AuthContext);
-  if (!ctx) return <div>Loading...</div>;
-  const { user, loading } = ctx;
+  const { user, loading } = useAuth();
   if (loading) return <div className="text-center mt-10">Loading...</div>;
   return user ? children : <Navigate to="/login" />;
 };
