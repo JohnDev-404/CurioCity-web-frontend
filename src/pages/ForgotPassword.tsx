@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { useAuth } from '../hooks/useAuth';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import { FaEnvelope, FaArrowLeft, FaCheckCircle } from 'react-icons/fa';
+import { FaEnvelope, FaCheckCircle } from 'react-icons/fa';
 import toast from 'react-hot-toast';
 
 const forgotSchema = z.object({
